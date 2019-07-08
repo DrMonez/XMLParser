@@ -28,7 +28,7 @@ namespace XMLParser
         /// <param name="element">Элемент, внутри которого будет происходить поиск тегов</param>
         /// <param name="tags">Список тегов без namespace, по которым надо пройти для достижения искомого тега с искомым значением. Последний элемент последовательности - искомый тег</param>
         /// <returns>Возвращает либо значение элемента, либо null</returns>
-        public static T? GetXElementValueNullable<T>(XElement element, string[] tags) where T : struct
+        public static T? GetXElementValueNullable<T>(XElement element, params string[] tags) where T : struct
         {
             var res = GetXElementList(element, tags).FirstOrDefault();
             return res == null ? null : (T?)Convert.ChangeType(res.Value, typeof(T), CultureInfo.InvariantCulture);
@@ -50,7 +50,7 @@ namespace XMLParser
         /// <param name="element">Элемент, внутри которого будет происходить поиск тегов</param>
         /// <param name="tags">Список тегов без namespace, по которым надо пройти для достижения искомого тега с искомым значением. Последний элемент последовательности - искомый тег</param>
         /// <returns>Возвращает либо значение элемента, либо дефолтное значение типа</returns>
-        public static T GetXElementValue<T>(XElement element, string[] tags)
+        public static T GetXElementValue<T>(XElement element, params string[] tags)
         {
             var res = GetXElementList(element, tags).FirstOrDefault();
             return res == null ? default(T) : (T)Convert.ChangeType(res.Value, typeof(T), CultureInfo.InvariantCulture);
@@ -61,7 +61,7 @@ namespace XMLParser
         /// <param name="element">Элемент, внутри которого будет происходить поиск тегов</param>
         /// <param name="tags">Список тегов без namespace, по которым надо пройти для достижения искомого тега. Последний элемент последовательности - искомый тег</param>
         /// <returns>Возвращает список искомых тегов</returns>
-        public static IEnumerable<XElement> GetXElementList(XElement element, string[] tags)
+        public static IEnumerable<XElement> GetXElementList(XElement element, params string[] tags)
         {
             IEnumerable<XElement> node = new XElement[] { element };
             foreach (var tag in tags)
