@@ -17,7 +17,7 @@ namespace XMLParser
         /// <typeparam name="T">Тип возвращаемого значения</typeparam>
         /// <param name="element">Элемент, значение которого хотим получить</param>
         /// <returns>Возвращает либо значение элемента, либо дефолтное значение типа</returns>
-        public static T GetXElementValue<T>(XElement element)
+        public static T GetXElementValue<T>(this XElement element)
         {
             var type = Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T);
             return element == null ? default(T) : (T)Convert.ChangeType(element.Value, type, CultureInfo.InvariantCulture);
@@ -29,7 +29,7 @@ namespace XMLParser
         /// <param name="element">Элемент, внутри которого будет происходить поиск тегов</param>
         /// <param name="tags">Список тегов без namespace, по которым надо пройти для достижения искомого тега с искомым значением. Последний элемент последовательности - искомый тег</param>
         /// <returns>Возвращает либо значение элемента, либо дефолтное значение типа</returns>
-        public static T GetXElementValue<T>(XElement element, params string[] tags)
+        public static T GetXElementValue<T>(this XElement element, params string[] tags)
         {
             var res = GetXElementList(element, tags).FirstOrDefault();
             var type = Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T);
@@ -41,7 +41,7 @@ namespace XMLParser
         /// <param name="element">Элемент, внутри которого будет происходить поиск тегов</param>
         /// <param name="tags">Список тегов без namespace, по которым надо пройти для достижения искомого тега. Последний элемент последовательности - искомый тег</param>
         /// <returns>Возвращает список искомых тегов</returns>
-        public static IEnumerable<XElement> GetXElementList(XElement element, params string[] tags)
+        public static IEnumerable<XElement> GetXElementList(this XElement element, params string[] tags)
         {
             IEnumerable<XElement> node = new XElement[] { element };
             foreach (var tag in tags)
